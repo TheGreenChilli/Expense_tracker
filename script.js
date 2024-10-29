@@ -12,11 +12,27 @@ document.addEventListener("DOMContentLoaded", () => {
   expenseForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const name =  expenseNameInput.value.trim();
+    const amount = parseFloat(expenseAmountInput.value.trim());
+    
+    if (name !== "" && !isNaN(amount) && amount > 0){
+      const newExpense = {
+        id: Date.now(),
+        name: name,
+        amount: amount,
+      };
+      expenses.push(newExpense);
+      saveExpensesTolocal();
+      updateTotal();
 
-  })
+      //clear input 
+      expenseNameInput.value = "";
+      expenseAmountInput.value = "";
+    }
+  });
 
   function calculateTotal(){ 
-    let total = 0;
+    return expenses.reduce((ssum, expense) => (sum + expense.amount), 0)
+    
   }
 
 })
